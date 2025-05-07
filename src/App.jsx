@@ -201,38 +201,70 @@ const App = () => {
 
   // 9999999999999999999 RETURN THE JSX COMPONENTS 9999999999999999999
   return (
-    <div className="flex justify-center mt-10">
-      <div className="flex flex-col items-center space-y-8 max-w-5xl mx-auto px-2">
+    <div className="flex justify-center md:mt-10 mt-7 ">
+      <div
+        className="flex flex-col items-center md:space-y-6 space-y-5 max-w-5xl mx-auto md:px-4 px-6"
+        role="main"
+        aria-labelledby="game-title"
+      >
         <section className="Header">
           <Assembly />
         </section>
-        <section className="Message w-1/2">
+        <section
+          className="Message w-1/2"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <Message text={alert} ref={messageRef} />
         </section>
 
-        <section className="Languages flex flex-col items-center ">
-          <div className="flex flex-wrap gap-2 justify-center text-center mt-4 max-w-2/3">
+        <section
+          className="Languages flex flex-col items-center"
+          aria-labelledby="language-section"
+        >
+          <h2 id="language-section" className="sr-only">
+            Select a Language
+          </h2>
+          <div
+            className="flex flex-wrap gap-2 justify-center text-center mt-4 max-w-2/3"
+            role="list"
+          >
             {languageComponents}
           </div>
         </section>
-        {/* <Language color="green" language="Css" /> */}
-        <section className="Blanks">
-          <div className="Blanks flex space-x-2">
+
+        <section className="Blanks" aria-labelledby="blanks-section">
+          <h2 id="blanks-section" className="sr-only">
+            Word to Guess
+          </h2>
+          <div
+            className="Blanks flex flex-wrap justify-center space-y-2 space-x-1 md:space-x-2"
+            role="group"
+            aria-label="Word Blanks"
+          >
             {Array.from({ length: word.length }, (_, ind) => (
               <Blank key={ind} char="" />
             ))}
           </div>
         </section>
-        {/* grid grid-cols-7 md:grid-cols-12 gap-2 */}
+
         <section
-          className="Kayboard flex flex-col items-center "
+          className="Kayboard flex flex-col items-center"
           ref={keyboardRef}
+          aria-labelledby="keyboard-section"
         >
-          <div className="Alphabet flex flex-wrap gap-1 md:gap-2  justify-center mt-4 md:w-1/2">
+          <h2 id="keyboard-section" className="sr-only">
+            Keyboard
+          </h2>
+          <div
+            className="Alphabet flex flex-wrap gap-1 md:gap-2 justify-center mt-4 md:w-1/2"
+            role="group"
+            aria-label="Alphabet Keyboard"
+          >
             {alphabetsElements}
           </div>
         </section>
-        {/* new game */}
+
         <div>
           {attempts > 8 || gameWon ? (
             <button
@@ -240,13 +272,19 @@ const App = () => {
               onClick={() => {
                 resetGame();
               }}
+              aria-label="Start a New Game"
             >
               New Game
             </button>
           ) : null}
         </div>
-        <div className="text-center text-gray-200 font-semibold text-xl -mt-4">
-          <small>Developed by Nowshad Halimzai</small>
+        <div
+          className="text-center text-gray-200 font-semibold text-xl -mt-4"
+          aria-label="Developer Information"
+        >
+          <small className="text-transparent bg-clip-text bg-gradient-to-tr from-red-500 via-blue-500 to-slate-950">
+            Developed by Nowshad Halimzai
+          </small>
         </div>
       </div>
     </div>
