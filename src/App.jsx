@@ -71,7 +71,25 @@ const App = () => {
     .map((char) => (
       <Alphabet key={char} char={char} click={() => handleClick(char)} />
     ));
+
+  const clickSound = React.useMemo(() => {
+    const sound = new Audio("click.mp3");
+    return sound;
+  }, []);
+
+  const lostSound = React.useMemo(() => {
+    const sound = new Audio("lostSound.wav");
+    return sound;
+  }, []);
+  const winSound = React.useMemo(() => {
+    const sound = new Audio("win.wav");
+    return sound;
+  }, []);
+
   function handleClick(char) {
+    clickSound.pause();
+    clickSound.preload = true;
+    clickSound.play();
     if (word.includes(char)) {
       word.split("").forEach((letter, index) => {
         if (letter === char) {
@@ -96,6 +114,7 @@ const App = () => {
       setAttempts((pre) => pre + 1);
       if (attempts === 8) {
         // setMessage(languages[attempts - 1].error)
+
         setMessage();
       } else {
         setMessage(languages[attempts - 1].error);
@@ -106,6 +125,8 @@ const App = () => {
   }
   // 666666666666666666666 END ALPHABETS RELATED CODE WHICH CONTAINS A LIST OF ALPHABETS AND ITS JSX COMPONENTS 6666666666666666
   if (guessedWord.join("") === word && gameWon === false) {
+    winSound.preload = true;
+    winSound.play();
     setGameWon(true);
   }
   // 777777777777777777777 Alert Message for every key stroke and the end of the game 77777777777777777777
@@ -118,6 +139,8 @@ const App = () => {
       messageRef.current.classList.remove("bg-red-500/70");
       messageRef.current.classList.add("bg-blue-500/70");
     } else {
+      lostSound.preload = true;
+      lostSound.play();
       setAlert(
         `You have lost the game! The word was ${word}. start learning Assembly`
       );
